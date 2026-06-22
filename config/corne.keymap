@@ -37,6 +37,31 @@
         };
     };
 
+    combos {
+        compatible = "zmk,combos";
+
+        symbol_left_brace {
+            bindings = <&kp LEFT_BRACE>;
+            key-positions = <4 5>;
+            layers = <0>;
+        };
+
+        symbol_right_brace {
+            bindings = <&kp RIGHT_BRACE>;
+            key-positions = <6 7>;
+            layers = <0>;
+        };
+    };
+
+    macros {
+        ru_en: change_lang {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(SPACE) &tog 3>;
+            label = "CHANGE_LANG";
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -49,10 +74,10 @@
 
             display-name = "Base";
             bindings = <
-&kp ESCAPE  &kp Q  &kp W                &kp E            &kp R                &kp T        &kp Y    &kp U                 &kp I             &kp O                 &kp P     &kp BSPC
+&kp ESCAPE  &kp Q  &kp W                &kp E            &kp R                &kp T        &kp Y    &kp U                 &kp I             &kp O                 &kp P     &kp GRAVE
 &kp TAB     &kp A  &HML LEFT_CONTROL S  &HML LEFT_ALT D  &HML LEFT_COMMAND F  &kp G        &kp H    &HMR RIGHT_COMMAND J  &HMR RIGHT_ALT K  &HMR RIGHT_CONTROL L  &kp SEMI  &kp SQT
 &kp LSHFT   &kp Z  &kp X                &kp C            &kp V                &kp B        &kp N    &kp M                 &kp COMMA         &kp DOT               &kp FSLH  &kp LC(LA(LS(LG(LSHFT))))
-                                        &kp LC(SPACE)    &mo 1                &kp SPACE    &kp RET  &mo 2                 &kp BACKSPACE
+                                        &ru_en           &mo 1                &kp SPACE    &kp RET  &mo 2                 &kp BACKSPACE
             >;
         };
 
@@ -86,6 +111,33 @@
 &kp LSHFT  &kp NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0    &kp AMPERSAND  &kp SLASH          &kp LBRC          &kp RBRC   &kp PIPE      &kp LC(LA(LS(LG(RIGHT_SHIFT))))
                                        &kp LGUI      &trans        &kp SPACE       &kp RET        &trans             &trans
             >;
+        };
+
+        ru_base {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+                        &ru_en  &trans  &trans    &trans  &trans  &trans
+            >;
+        };
+
+        ru_symbols {
+            bindings = <
+&trans  &trans        &trans        &trans        &trans        &trans          &kp LS(NUMBER_4)  &kp LS(NUMBER_2)  &trans        &trans     &trans            &trans
+&trans  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5    &kp LS(NUMBER_6)  &kp FSLH          &kp LS(FSLH)  &kp MINUS  &kp LS(NUMBER_7)  &kp EQUAL
+&trans  &kp NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0    &trans            &trans            &trans        &trans     &trans            &kp LC(LA(LS(LG(RIGHT_SHIFT))))
+                                    &trans        &trans        &trans          &trans            &trans            &trans
+            >;
+        };
+    };
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+
+        ru_symbols_change {
+            if-layers = <3 2>;
+            then-layer = <4>;
         };
     };
 };
